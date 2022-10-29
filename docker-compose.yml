@@ -1,0 +1,20 @@
+version: '3.9'
+services:
+  demo_admin-app:
+    image: demo-admin:latest
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=prod,api-docs
+      - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
+      - JHIPSTER_SLEEP=30
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/demo_admin
+      - JDBC_DATABASE_USERNAME=keycloak
+      - JDBC_DATABASE_PASSWORD=123456
+      - OIDC_URL=https://account.leequyt.monster/auth/realms/jhipster
+      - OIDC_CLIENT_ID=web_app
+      - OIDC_CLIENT_SECRET=web_app
+    ports:
+      - 8081:8081
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
